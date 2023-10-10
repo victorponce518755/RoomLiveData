@@ -34,6 +34,17 @@ class MainActivity : AppCompatActivity() {
         val edtUserId = findViewById<EditText>(R.id.edtUserId)
         txtResults = findViewById(R.id.txtResults)
 
+        db.userDao().getAllUsers().observe(this)
+        {
+            users ->
+            val output = StringBuilder()
+            for (user in users)
+            {
+                output.append("ID: ${user.id}, Nombre: ${user.name}, Edad: ${user.age}\n")
+            }
+            txtResults.text = output.toString()
+        }
+
         val btnInsert = findViewById<Button>(R.id.btnInsert)
         val btnRetrieve = findViewById<Button>(R.id.btnRetrieve)
         val btnUpdate = findViewById<Button>(R.id.btnUpdate)
@@ -61,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         btnRetrieve.setOnClickListener {
             //val cursor = databaseHelper.getAllUsers()
-            GlobalScope.launch(Dispatchers.IO) {
+            /*GlobalScope.launch(Dispatchers.IO) {
                 val users = db.userDao().getAllUsers()
                 launch(Dispatchers.Main) {
                     val output = StringBuilder()
@@ -81,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     txtResults.text = output.toString()
                 }
 
-            }
+            }*/
             //cursor.close()
         }
 
